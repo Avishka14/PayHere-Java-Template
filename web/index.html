@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PayHere Sandbox Demo</title>
+    <script src="https://www.payhere.lk/lib/payhere.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #222;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #3a0ca3;
+        }
+
+        #pay-button {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #3b82f6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #pay-button:hover {
+            background-color: #2563eb;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>PayHere Demo</h1>
+    <button id="pay-button">Pay LKR 100</button>
+    <h1>PayHere JAVA Template by Avishka Chamod</h1>
+    <script>
+    window.onload = function() {
+        const btn = document.getElementById('pay-button');
+        btn.addEventListener('click', () => {
+            fetch('http://localhost:8080/Payhere/api/payhere/hash', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(!window.payhere) return alert("PayHere SDK not loaded");
+
+                window.payhere.onCompleted = (orderId) => {
+                    alert("Payment Completed! Order: " + orderId);
+                    window.location.href = data.return_url + "?order_id=" + orderId;
+                };
+                window.payhere.onDismissed = () => alert("Payment Cancelled");
+                window.payhere.onError = (err) => alert("Payment Error: " + err);
+
+                window.payhere.startPayment(data);
+            })
+            .catch(err => console.error(err));
+        });
+    };
+    </script>
+</body>
+</html>
