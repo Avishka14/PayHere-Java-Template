@@ -26,8 +26,7 @@ This project is a Java-based PayHere payment gateway integration template. It al
 PayHereJavaTemplate//
 │
 ├── src/
-│   ├── controller/
-│   │   ├── java/com/quizbot/quizbot_springboot_server/
+│   ├── controller/  
 │   │   │   ├── PaymentServlet.java        // Generates PayHere hash and payment request
 │   │   │   └── PayHereNotifyServlet.java  // Handles payment notifications
 │   │   │      
