@@ -226,4 +226,4 @@ curl -X POST http://localhost:8080/Payhere/api/payhere/hash
 
 
 
-**Designed & Developed by Avishka Chamod**
+ &copy; **Avishka Chamod**
